@@ -16,18 +16,6 @@ Idées de projet :
    - Créer une version multijoueur de Tetris où les joueurs peuvent s'affronter en temps réel. Le jeu pourrait inclure des fonctionnalités telles que le sabotage des adversaires, des power-ups et un classement en ligne.
    - Ajouter un mode solo avec des niveaux de difficulté croissants et un système de score pour encourager la compétition entre les joueurs.
 
-------------
-
-Descriptif : (Space Invader)
-
-Interface :
-- Interface rétro (Jouer, Scoreboard, Options, Quitter) 
-- Musique
-- Graphismes : 
-  - Vaisseaux, ennemis, projectiles, explosions
-  - Effets visuels pour les collisions et les tirs
-  - Animation fluide pour les mouvements des vaisseaux et des ennemis
-
 -------------
 
 Descriptif : (Tetris)
@@ -39,3 +27,8 @@ Interface :
   - Blocs colorés pour les pièces de Tetris
   - Effets visuels pour les lignes complétées et les niveaux
   - Animation fluide pour la chute des pièces et les rotations
+
+Etapes :
+
+1. Créer le jeu de base localement : dev python, mode solo, interfade, pygame, etc
+2. Fast API pour chercher la partie réseau 
