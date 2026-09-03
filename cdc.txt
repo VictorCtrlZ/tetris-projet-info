@@ -1,0 +1,41 @@
+Projet Informatique :
+
+Contraintes :
+- Visuel 
+- Affichage en temps réel
+- Réseau 
+- Utiliser model IA (facultatif)
+
+Idées de projet :
+1. Application de chat en temps réel avec IA : Créer une application de messagerie instantanée qui permet aux utilisateurs de communiquer en temps réel. L'application pourrait intégrer un modèle d'IA pour fournir des suggestions de réponses, détecter le sentiment des messages ou même traduire les messages dans différentes langues.
+2. Jeu multijoueur en ligne : Développer un jeu en ligne où plusieurs joueurs peuvent interagir en temps réel. Le jeu pourrait inclure des éléments visuels attrayants et utiliser un modèle d'IA pour gérer les comportements des personnages non-joueurs ou pour équilibrer le gameplay.
+    -> Space Invader-like : multijoueur avec scoreboard actualisé, application ou web
+    -> Si trop facile : ajouter mini-jeux, implémenter un multijoueur temps réel (plusieurs vaisseaux)
+
+3. Tetris : 
+   - Créer une version multijoueur de Tetris où les joueurs peuvent s'affronter en temps réel. Le jeu pourrait inclure des fonctionnalités telles que le sabotage des adversaires, des power-ups et un classement en ligne.
+   - Ajouter un mode solo avec des niveaux de difficulté croissants et un système de score pour encourager la compétition entre les joueurs.
+
+------------
+
+Descriptif : (Space Invader)
+
+Interface :
+- Interface rétro (Jouer, Scoreboard, Options, Quitter) 
+- Musique
+- Graphismes : 
+  - Vaisseaux, ennemis, projectiles, explosions
+  - Effets visuels pour les collisions et les tirs
+  - Animation fluide pour les mouvements des vaisseaux et des ennemis
+
+-------------
+
+Descriptif : (Tetris)
+
+Interface :
+- Interface rétro (Jouer, Scoreboard, Options, Quitter) 
+- Musique
+- Graphismes : 
+  - Blocs colorés pour les pièces de Tetris
+  - Effets visuels pour les lignes complétées et les niveaux
+  - Animation fluide pour la chute des pièces et les rotations
