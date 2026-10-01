@@ -2,7 +2,8 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render
-
+def accueil(request):
+    return render(request, 'accueil.html')
 def menu(request):
     return render(request, 'menu.html')
 
@@ -14,6 +15,9 @@ def solo(request):
 
 def duel(request):
     return render(request, 'duel.html')
+
+def collaboratif(request):
+    return render(request, 'collaboratif.html')
 
 def readme(request):
     return render(request, 'readme.html')

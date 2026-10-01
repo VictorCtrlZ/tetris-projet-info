@@ -7,10 +7,12 @@ from listings import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('menu/', views.menu),
+    path('accueil/', views.accueil, name='accueil'),
+    path('menu/', views.menu, name='menu'),
     path('scoreboard/', views.scoreboard),
-    path('solo/', views.solo),
-    path('duel/', views.duel),
+    path('solo/', views.solo, name='modeSolo'),
+    path('duel/', views.duel, name='modeDuel'),
+    path('collaboratif/', views.collaboratif , name='modeCollaboratif'),
     path('readme/', views.readme),
     path('aboutus/', views.aboutus),
 ]
