@@ -19,8 +19,8 @@ def duel(request):
 def collaboratif(request):
     return render(request, 'collaboratif.html')
 
-def readme(request):
-    return render(request, 'readme.html')
+def regles(request):
+    return render(request, 'regles.html')
 
 def aboutus(request):
     return render(request, 'aboutus.html')

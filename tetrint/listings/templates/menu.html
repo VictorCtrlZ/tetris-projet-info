@@ -16,11 +16,15 @@
 <!--            <source src="{% static 'teal-neon-border-background.mp4' %}" type="video/mp4">-->
 <!--        </video>-->
         <div class="settings-button">
-            <img src="{% static 'engrenage.png' %}" alt="Paramètres">
+            <a href="{% url 'regles' %}">
+                <img src="{% static 'engrenage.png' %}" alt="Règles du jeu">
+            </a>
         </div>
 
         <div class="dashboard-button">
-            <img src="{% static 'trophee.png' %}" alt="Dashboard">
+            <a href="{% url 'scoreboard' %}">
+                <img src="{% static 'trophee.png' %}" alt="Scoreboard">
+            </a>
         </div>
 
         <h1>Choisissez votre mode de jeu</h1>
