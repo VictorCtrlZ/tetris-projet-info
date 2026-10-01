@@ -1,7 +1,7 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render
-from rest_framework import generics
-from .models import Trait
-from .serializers import TraitSerializer
+from .tetris import Tetris
+
 
 def accueil(request):
     return render(request, "game/accueil.html")
@@ -18,11 +18,6 @@ def modeDuel(request):
 def modeCollaboratif(request):
     return render(request, "game/modeCollaboratif.html")
 
-
-class TraitCreate(generics.ListCreateAPIView):
-    queryset = Trait.objects.all()
-    serializer_class = TraitSerializer
-
-class TraitDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Trait.objects.all()
-    serializer_class = TraitSerializer
+def grid(request):
+    jeu = Tetris()
+    return JsonResponse(jeu.get_grid())

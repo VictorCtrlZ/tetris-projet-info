@@ -44,3 +44,7 @@ class Tetris:
 
         self.score = 0
 
+
+    def get_grid(self):
+        return {"width":self.width, "height":self.height, "grid":self.grid}
+

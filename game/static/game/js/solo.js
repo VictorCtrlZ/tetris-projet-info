@@ -10,14 +10,34 @@ fetch("/api/trait/")
         dessinerTrait(traits);
     });
 
-function dessinerTrait(traits){
-    if (traits.length < 2){
-        return;
-    }
-    ctx.moveTo(traits[0].x, traits[0].y);
+fetch("/api/grid/")
+    .then(response=> response.json())
+    .then(data => {
+        console.log(data);
 
-    for (let i=1; i<traits.length; i++){
-        ctx.lineTo(traits[i].x, traits[i].y);
+        const largeur = data.width;
+        const hauteur = data.height;
+
+        canvas.width = largeur * tailleCase;
+        canvas.height = hauteur * tailleCase;
+
+        dessinerGrille(largeur, hauteur);
+    })
+    .catch(error => {
+        console.error("Erreur : ", error);
+        }
+    );
+
+
+ const tailleCase = 25;
+
+function dessinerGrille(largeur, hauteur){
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+
+    for(let y=0; y<hauteur; y++){
+        for (let x=0; x<largeur; x++){
+            ctx.strokeRect(x*tailleCase, y*tailleCase, tailleCase, tailleCase);
+        }
     }
-    ctx.stroke();
 }
+dessinerGrille();
