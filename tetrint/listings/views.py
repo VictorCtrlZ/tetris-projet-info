@@ -11,13 +11,13 @@ def scoreboard(request):
     return render(request, 'scoreboard.html')
 
 def solo(request):
-    return render(request, 'solo.html')
+    return render(request, 'modeSolo.html')
 
 def duel(request):
-    return render(request, 'duel.html')
+    return render(request, 'modeDuel.html')
 
 def collaboratif(request):
-    return render(request, 'collaboratif.html')
+    return render(request, 'modeCollaboratif.html')
 
 def regles(request):
     return render(request, 'regles.html')

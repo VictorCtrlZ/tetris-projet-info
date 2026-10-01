@@ -7,23 +7,23 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Menu</title>
-        <link rel="stylesheet" href="{% static 'menu.css' %}">
-        <link rel="icon" href="{% static 'logo.png' %}">
+        <link rel="stylesheet" href="{% static 'game/css/menu.css' %}">
+        <link rel="icon" href="{% static 'game/images/logo.png' %}">
 
     </head>
     <body>
 <!--        <video class="background-video" autoplay muted loop playsinline>-->
-<!--            <source src="{% static 'teal-neon-border-background.mp4' %}" type="video/mp4">-->
+<!--            <source src="{% static 'game/images/teal-neon-border-background.mp4' %}" type="video/mp4">-->
 <!--        </video>-->
         <div class="settings-button">
             <a href="{% url 'regles' %}">
-                <img src="{% static 'engrenage.png' %}" alt="Règles du jeu">
+                <img src="{% static 'game/images/engrenage.png' %}" alt="Paramètres">
             </a>
         </div>
 
         <div class="dashboard-button">
             <a href="{% url 'scoreboard' %}">
-                <img src="{% static 'trophee.png' %}" alt="Scoreboard">
+                <img src="{% static 'game/images/trophee.png' %}" alt="Scoreboard">
             </a>
         </div>
 
