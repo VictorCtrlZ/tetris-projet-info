@@ -1,0 +1,9 @@
+Développer le moteur
+	- Séparer les fonctions, les comprendre et les réécrire. (S & V)
+
+Adapter le front pour lire "engine.py"
+	- Afficher le jeu avec le moteur. (S & V) 
+	- Finir la partie solo du jeu. (S & V) 				-> DEADLINE : FIN OCTOBRE
+
+Multijoueur
+	- Développer le websocket, pour synchroniser les joueurs en multijoueurs. (E)
