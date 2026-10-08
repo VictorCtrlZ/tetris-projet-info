@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tetr'INT</title>
+        <link rel="stylesheet" href="{% static 'game/css/accueil.css' %}">
+        <link rel="icon" href="{% static 'game/images/logo.png' %}">
+
+    </head>
+    <body>
+<!--        <video class="background-video" autoplay muted loop playsinline>-->
+<!--            <source src="{% static 'game/images/teal-neon-border-background.mp4' %}" type="video/mp4">-->
+<!--        </video>-->
+        <img src="{% static 'game/images/logo-no-bg.png' %}" alt="Logo Tetr'INT" class="logo">
+
+        <script>
+            setTimeout(function () {
+                window.location.href = "{% url 'menu' %}";
+            }, 5000)
+        </script>
+    </body>
+</html>
