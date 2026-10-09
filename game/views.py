@@ -1,7 +1,8 @@
 from django.http.response import JsonResponse
 from django.shortcuts import render
-from .tetris import Tetris
+from .engine import Tetris
 
+game = Tetris()
 
 def accueil(request):
     return render(request, "game/accueil.html")
@@ -18,6 +19,5 @@ def modeDuel(request):
 def modeCollaboratif(request):
     return render(request, "game/modeCollaboratif.html")
 
-def grid(request):
-    jeu = Tetris()
-    return JsonResponse(jeu.get_grid())
+def board(request):
+    return JsonResponse(game.toDict())

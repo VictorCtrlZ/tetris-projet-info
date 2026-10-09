@@ -7,5 +7,5 @@ urlpatterns = [
     path('solo/', views.modeSolo, name='modeSolo'),
     path('duel/', views.modeDuel, name='modeDuel'),
     path('collaboratif/', views.modeCollaboratif, name='modeCollaboratif'),
-    path("grid/",views.grid, name='grid'),
+    path("board/",views.board, name='board'),
 ]
