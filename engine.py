@@ -40,17 +40,27 @@ class Tetris:
         self.nextFigure = random.randint(0, 6)
         self.cells = self.newPosition(self.currentFigure)
 
-    def newPosition(self, figure):
+    def createFigure(self, figure):
         cells = []
         for x, y in figures[figure]:
             cells.append((width // 2 + (x - 1), y + 1))
         return cells
 
+    # Collision, needed for the movements
+    def collision(self, cells):
+        for x, y in cells:
+            if x < 0 or x > width - 1 or y > height - 1:
+                return True
+            if y >= 0 and self.board[y][x] != 0:
+                return True
+        return False
+
+    # Moving the pieces
     #def left(self):
 
     #def right(self):
 
-    #def collision(self):
+
 
     def toDict(self):
 
