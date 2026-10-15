@@ -56,11 +56,25 @@ class Tetris:
         return False
 
     # Moving the pieces
-    #def left(self):
+    def left(self):
+        if self.gameOver:
+            return
+        newCells = []
+        for x, y in self.cells:
+            newCells.append( ( x - 1, y ) )
+        if self.collision(newCells) == False:
+            self.cells = newCells
 
-    #def right(self):
+    def right(self):
+        if self.gameOver:
+            return
+        newCells = []
+        for x, y in self.cells:
+            newCells.append( ( x + 1, y ) )
+        if self.collision(newCells) == False:
+            self.cells = newCells
 
-
+    #def rotation(self):
 
     def toDict(self):
 
