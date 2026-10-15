@@ -4,13 +4,13 @@ width = 10
 height = 20
 
 figures = [
-    [(0, 0), (1, 0), (2, 0), (3, 0)],   # 0 : la barre (I)
-    [(0, 2), (0, 1), (1, 1), (1, 0)],  # 1 : S
-    [(0, 0), (0, 1), (1, 1), (1, 2)],    # 2 : Z
+    [(1, 0), (0, 0),  (2, 0), (3, 0)],   # 0 : la barre (I)
+    [(0, 1), (0, 2),  (1, 1), (1, 0)],  # 1 : S
+    [(0, 1), (0, 0), (1, 1), (1, 2)],    # 2 : Z
     [(0, 0), (0, 1), (1, 0), (1, 1)],     # 3 : le carré (O)
-    [(0, 1), (0, 0), (1, 0), (2, 0)],     # 4 : L
-    [(0, 0), (1, 0), (2, 0), (2, 1)],     # 5 : J
-    [(0, 0), (1, 0), (1, 1), (2, 0)],     # 6 : T
+    [(1, 0), (0, 1), (0, 0), (2, 0)],     # 4 : L
+    [(1, 0), (0, 0), (2, 0), (2, 1)],     # 5 : J
+    [(1, 0), (0, 0), (1, 1), (2, 0)],     # 6 : T
 ]
 
 # Vitesses en millisecondes du jeu
@@ -27,27 +27,32 @@ class Tetris:
         for y in range(height):
             line = []
             for x in range(width):
-                line.append([])
+                line.append(0)              # Une case vide vaut 0, choix de logique
             self.board.append(line)
 
         self.score = 0
         self.gameOver = False
 
         self.fallSpeed = fallSpeed
-        self.fastFallSpeed = fastFallSpeed
         self.time = 0
 
         self.currentFigure = random.randint(0, 6)
         self.nextFigure = random.randint(0, 6)
-        self.cases = self.newPosition(self.currentFigure)
+        self.cells = self.newPosition(self.currentFigure)
 
     def newPosition(self, figure):
-        cases = []
+        cells = []
         for x, y in figures[figure]:
-            cases.append((width // 2 + (x - 1), y + 1))
-        return cases
+            cells.append((width // 2 + (x - 1), y + 1))
+        return cells
 
-    def to_dict(self):
+    #def left(self):
+
+    #def right(self):
+
+    #def collision(self):
+
+    def toDict(self):
 
         return {
             "plateau": self.plateau,
