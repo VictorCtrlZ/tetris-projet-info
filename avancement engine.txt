@@ -1,0 +1,23 @@
+Fonctionnalités manquantes :
+
+1. Déplacement
+    - move (moveLeft & moveRight OU move puis left & right)
+    - collision avec les bords
+    - rotation
+
+2. Fin de chute des pièces
+    - lockPiece : "place" les cases dans la grille une fois qu'elles sont tombées
+    - clearLine : supprime une ligne de la grille une fois qu'elle est complétée
+    - gestion du score
+    - piece suivante, remplacer currentFigure par nextFigure
+    - gameOver : bloque tout le jeu
+
+3. Temps
+    - Chute rapide : booléen (à définir)
+    - tick : cumule le temps dans self.time
+
+4. Interface
+    - toDict : format dictionnaire lisible par le JS pour passer du backend au frontend
+
+5. Bonus si le temps le permet
+    - à définir une touche)
