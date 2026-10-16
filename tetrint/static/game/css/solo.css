@@ -1,0 +1,11 @@
+body{
+    background-color: #ecfaec;
+}
+
+h1 {
+    font-size: 3vw;
+    font-family: "OCR A Extended" ;
+    color: black;
+    margin-bottom: 4%;
+    text-align: left;
+}
