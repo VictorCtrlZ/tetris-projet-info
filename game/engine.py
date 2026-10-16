@@ -51,7 +51,7 @@ class Tetris:
         for x, y in cells:
             if x < 0 or x >= width or y < 0 or y >= height:
                 return True
-            if y >= 0 and self.board[y][x] != 0:
+            if self.board[y][x] != 0:
                 return True
         return False
 
