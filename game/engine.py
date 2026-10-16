@@ -49,7 +49,7 @@ class Tetris:
     # Collision, needed for the movements
     def collision(self, cells):
         for x, y in cells:
-            if x < 0 or x >= width or y > height:
+            if x < 0 or x > width - 1 or y > height - 1:
                 return True
             if y >= 0 and self.board[y][x] != 0:
                 return True
