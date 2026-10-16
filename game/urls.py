@@ -8,4 +8,7 @@ urlpatterns = [
     path('duel/', views.modeDuel, name='modeDuel'),
     path('collaboratif/', views.modeCollaboratif, name='modeCollaboratif'),
     path("board/",views.board, name='board'),
+    path("rotate/",views.rotate, name='rotate'),
+    path("left/",views.left, name='left'),
+    path("right/",views.right, name='right')
 ]

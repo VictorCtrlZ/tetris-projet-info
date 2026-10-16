@@ -21,3 +21,22 @@ def modeCollaboratif(request):
 
 def board(request):
     return JsonResponse(game.toDict())
+
+def left(request):
+    game.left()
+    return JsonResponse({
+        "cells": game.cells
+    })
+
+def right(request):
+    game.right()
+    return JsonResponse({
+        "cells": game.cells
+    })
+
+
+def rotate(request):
+    game.rotate()
+    return JsonResponse({
+        "cells": game.cells
+    })

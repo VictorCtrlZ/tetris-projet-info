@@ -10,7 +10,7 @@ const cellSize = 25;
 
 function drawBoard(width, height){
     ctx.clearRect(0,0,canvas.width, canvas.height);
-
+    ctx.strokeStyle = "black";
     for(let y=0; y<height; y++){
         for (let x=0; x<width; x++){
             ctx.strokeRect(x*cellSize, y*cellSize, cellSize, cellSize);
@@ -19,6 +19,8 @@ function drawBoard(width, height){
 }
 
 function drawCell(cells){
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    drawBoard(canvas.width,canvas.height)
     ctx.fillStyle = ctx.strokeStyle = figureColor;
 
     for (let i =0; i<cells.length; i++) {
@@ -45,10 +47,6 @@ let figureColor = randomColor();
 
 
 
-
-
-
-
 fetch("/api/board/")
     .then(response=> response.json())
     .then(data => {
@@ -58,8 +56,45 @@ fetch("/api/board/")
 
         drawBoard(data.width, data.height);
         drawCell(data.cells);
-    })
-    .catch(error => {
-        console.error("Erreur : ", error);
-        }
-    );
+    });
+
+
+function updateRotation() {
+    fetch("/api/rotate")
+        .then(response => response.json())
+        .then(data => {
+            drawCell(data.cells)
+        })
+}
+
+function updateLeft() {
+    fetch("/api/left")
+        .then(response => response.json())
+        .then(data => {
+            drawCell(data.cells)
+        })
+}
+
+function updateRight() {
+    fetch("/api/right")
+        .then(response => response.json())
+        .then(data => {
+            drawCell(data.cells)
+        })
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowUp") {
+        updateRotation();
+    }
+
+    if (event.key === "ArrowLeft") {
+        updateLeft();
+    }
+
+    if (event.key === "ArrowRight") {
+        updateRight();
+    }
+});
+
+

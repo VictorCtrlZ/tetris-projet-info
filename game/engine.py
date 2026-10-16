@@ -14,8 +14,8 @@ figures = [
 ]
 
 # Vitesses en millisecondes du jeu
-fallSpeed = 1000
-fastFallSpeed = 50
+FALL_SPEED = 1000
+FAST_FALL_SPEED = 50
 
 #Jeu solo
 class Tetris:
@@ -27,28 +27,68 @@ class Tetris:
         for y in range(height):
             line = []
             for x in range(width):
-                line.append([])
+                line.append((0))
             self.board.append(line)
 
         self.score = 0
         self.gameOver = False
 
-        self.fallSpeed = fallSpeed
-        self.fastFallSpeed = fastFallSpeed
+        self.fallSpeed = FALL_SPEED
         self.time = 0
 
         self.currentFigure = random.randint(0, 6)
         self.nextFigure = random.randint(0, 6)
-        self.cells = self.newPosition(self.currentFigure)
+        self.cells = self.createFigure(self.currentFigure)
 
-    def newPosition(self, figure):
+    def createFigure(self, figure):
         cells = []
         for x, y in figures[figure]:
             cells.append((width // 2 + (x - 1), y + 1))
         return cells
 
-    def toDict(self):
+    # Collision, needed for the movements
+    def collision(self, cells):
+        for x, y in cells:
+            if x < 0 or x >= width or y > height:
+                return True
+            if y >= 0 and self.board[y][x] != 0:
+                return True
+        return False
 
+    # Moving the pieces
+    def left(self):
+        if self.gameOver:
+            return
+        newCells = []
+        for x, y in self.cells:
+            newCells.append( ( x - 1, y ) )
+        if self.collision(newCells) == False:
+            self.cells = newCells
+
+    def right(self):
+        if self.gameOver:
+            return
+        newCells = []
+        for x, y in self.cells:
+            newCells.append( ( x + 1, y ) )
+        if self.collision(newCells) == False:
+            self.cells = newCells
+
+    def rotate(self):
+        centerX, centerY = self.cells[0]
+        newCells = []
+        for x, y in self.cells:
+            offsetX = x - centerX
+            offsetY = y - centerY
+
+            newX = centerX - offsetY
+            newY = centerY + offsetX
+
+            newCells.append((newX,newY))
+        if self.collision(newCells) == False:
+            self.cells = newCells
+
+    def toDict(self):
         return {
             "width": width,
             "height": height,
@@ -56,7 +96,6 @@ class Tetris:
             "score": self.score,
             "gameOver": self.gameOver,
             "fallSpeed": self.fallSpeed,
-            "fastFallSpeed": self.fastFallSpeed,
             "time": self.time,
             "currentFigure": self.currentFigure,
             "nextFigure": self.nextFigure,
