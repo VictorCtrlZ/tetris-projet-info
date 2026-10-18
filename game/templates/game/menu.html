@@ -12,15 +12,16 @@
 
     </head>
     <body>
-<!--        <video class="background-video" autoplay muted loop playsinline>-->
-<!--            <source src="{% static 'game/images/teal-neon-border-background.mp4' %}" type="video/mp4">-->
-<!--        </video>-->
-        <div class="settings-button">
-            <img src="{% static 'game/images/engrenage.png' %}" alt="Paramètres">
+        <div class="rules-button">
+            <a href="{% url 'regles' %}">
+                <img src="{% static 'game/images/rules.png' %}" alt="Rules">
+            </a>
         </div>
 
         <div class="dashboard-button">
-            <img src="{% static 'game/images/trophee.png' %}" alt="Dashboard">
+            <a href="{% url 'scoreboard' %}">
+                <img src="{% static 'game/images/trophee.png' %}" alt="Scoreboard">
+            </a>
         </div>
 
         <h1>Choisissez votre mode de jeu</h1>
@@ -34,6 +35,11 @@
             </a>
             <a href="{% url 'modeCollaboratif' %}">
                 <button class="menu-button">Collaboratif</button>
+            </a>
+        </div>
+        <div class="about-us-button">
+            <a href="{% url 'aboutus' %}">
+                <img src="{% static 'game/images/about-us.png' %}" alt="About us">
             </a>
         </div>
     </body>

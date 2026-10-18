@@ -19,6 +19,16 @@ def modeDuel(request):
 def modeCollaboratif(request):
     return render(request, "game/modeCollaboratif.html")
 
+def regles(request):
+    return render(request, "game/regles.html")
+
+def aboutus(request):
+    return render(request, "game/aboutus.html")
+
+def scoreboard(request):
+    return render(request, "game/scoreboard.html")
+
+
 def board(request):
     return JsonResponse(game.toDict())
 
