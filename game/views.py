@@ -46,7 +46,7 @@ def right(request):
 
 
 def rotate(request):
-    game.rotate()
+    game.rotation()
     return JsonResponse({
         "cells": game.cells
     })
