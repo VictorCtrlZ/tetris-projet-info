@@ -74,7 +74,27 @@ class Tetris:
         if self.collision(newCells) == False:
             self.cells = newCells
 
-    #def rotation(self):
+    def rotation(self):
+
+        if not self.gameOver and not self.currentFigure == 3:
+
+            centerX, centerY = self.cells[0]
+            newCells = []
+
+            for x, y in self.cells:
+                offsetX = x - centerX
+                offsetY = y - centerY
+
+                newX = centerX - offsetY
+                newY = centerY + offsetX
+
+                newCells.append((newX, newY))
+
+            if self.collision(newCells) == False:
+                self.cells = newCells
+
+        else :
+            return
 
     def toDict(self):
 

@@ -1,9 +1,9 @@
 Fonctionnalités manquantes :
 
-1. Déplacements [2/3]
+1. Déplacements [3/3]
     [FAIT] - collision avec les bords
     [FAIT] - move (moveLeft & moveRight OU move puis left & right)
-    - rotation
+    [FAIT] - rotation
 
 2. Fin de chute des pièces [0/5]
     - lockPiece : "place" les cases dans la grille une fois qu'elles sont tombées
