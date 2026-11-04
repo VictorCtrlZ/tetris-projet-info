@@ -1,22 +1,21 @@
-git add engine.py "avancement engine.txt"
 import random
 
 width = 10
 height = 20
 
 figures = [
-    [(1, 0), (0, 0),  (2, 0), (3, 0)],   # 0 : la barre (I)
-    [(0, 1), (0, 2),  (1, 1), (1, 0)],  # 1 : S
-    [(0, 1), (0, 0), (1, 1), (1, 2)],    # 2 : Z
+    [(0, 0), (1, 0), (2, 0), (3, 0)],   # 0 : la barre (I)
+    [(0, 2), (0, 1), (1, 1), (1, 0)],  # 1 : S
+    [(0, 0), (0, 1), (1, 1), (1, 2)],    # 2 : Z
     [(0, 0), (0, 1), (1, 0), (1, 1)],     # 3 : le carré (O)
-    [(1, 0), (0, 1), (0, 0), (2, 0)],     # 4 : L
-    [(1, 0), (0, 0), (2, 0), (2, 1)],     # 5 : J
-    [(1, 0), (0, 0), (1, 1), (2, 0)],     # 6 : T
+    [(0, 1), (0, 0), (1, 0), (2, 0)],     # 4 : L
+    [(0, 0), (1, 0), (2, 0), (2, 1)],     # 5 : J
+    [(0, 0), (1, 0), (1, 1), (2, 0)],     # 6 : T
 ]
 
 # Vitesses en millisecondes du jeu
-fallSpeed = 1000
-fastFallSpeed = 50
+FALL_SPEED = 1000
+FAST_FALL_SPEED = 50
 
 #Jeu solo
 class Tetris:
@@ -28,18 +27,18 @@ class Tetris:
         for y in range(height):
             line = []
             for x in range(width):
-                line.append(0)              # Une case vide vaut 0, choix de logique
+                line.append((0))
             self.board.append(line)
 
         self.score = 0
         self.gameOver = False
 
-        self.fallSpeed = fallSpeed
+        self.fallSpeed = FALL_SPEED
         self.time = 0
 
         self.currentFigure = random.randint(0, 6)
         self.nextFigure = random.randint(0, 6)
-        self.cells = self.newPosition(self.currentFigure)
+        self.cells = self.createFigure(self.currentFigure)
 
     def createFigure(self, figure):
         cells = []
@@ -50,9 +49,9 @@ class Tetris:
     # Collision, needed for the movements
     def collision(self, cells):
         for x, y in cells:
-            if x < 0 or x > width - 1 or y > height - 1:
+            if x < 0 or x >= width or y < 0 or y >= height:
                 return True
-            if y >= 0 and self.board[y][x] != 0:
+            if self.board[y][x] != 0:
                 return True
         return False
 
@@ -98,10 +97,15 @@ class Tetris:
             return
 
     def toDict(self):
-
         return {
-            "plateau": self.plateau,
+            "width": width,
+            "height": height,
+            "board": self.board,
             "score": self.score,
-            "niveau": self.niveau,
-            "partie_terminee": self.partie_terminee,
+            "gameOver": self.gameOver,
+            "fallSpeed": self.fallSpeed,
+            "time": self.time,
+            "currentFigure": self.currentFigure,
+            "nextFigure": self.nextFigure,
+            "cells": self.cells
         }
