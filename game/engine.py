@@ -96,6 +96,17 @@ class Tetris:
         else :
             return
 
+    def fall(self):
+        if self.gameOver:
+            return
+
+        newCells = []
+        for x, y in self.cells:
+            newCells.append((x, y+1))
+
+        if self.collision(newCells) == False:
+            self.cells = newCells
+
     def toDict(self):
         return {
             "width": width,
