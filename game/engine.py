@@ -13,6 +13,8 @@ figures = [
     [(0, 0), (1, 0), (1, 1), (2, 0)],     # 6 : T
 ]
 
+points = {0 : 0, 1 : 100, 2 : 300, 3 : 700, 4 : 1500}
+
 # Vitesses en millisecondes du jeu
 FALL_SPEED = 1000
 FAST_FALL_SPEED = 50
@@ -76,16 +78,16 @@ class Tetris:
 
     def rotation(self):
 
-        if not self.gameOver and not self.currentFigure == 3:
+        if not self.gameOver and not self.currentFigure == 3: # 3 est le carré, pas besoin de rota
 
-            centerX, centerY = self.cells[0]
+            centerX, centerY = self.cells[0] # Pivot
             newCells = []
 
             for x, y in self.cells:
-                offsetX = x - centerX
+                offsetX = x - centerX # Distances de chaque case au pivot
                 offsetY = y - centerY
 
-                newX = centerX - offsetY
+                newX = centerX - offsetY # Nouvelle position
                 newY = centerY + offsetX
 
                 newCells.append((newX, newY))
@@ -96,16 +98,26 @@ class Tetris:
         else :
             return
 
-    def fall(self):
-        if self.gameOver:
-            return
+    def clearLine(self):
+        keptLines = []  # Définir les lignes à garder, celle qui ont un 0 car si une case est vide on garde la ligne
+        for line in self.board :
+            if 0 in line :
+                keptLines.append(line)
+            # Sinon la ligne est pleine, donc on enlève
 
-        newCells = []
-        for x, y in self.cells:
-            newCells.append((x, y+1))
+        removed = height - len(keptLines)
 
-        if self.collision(newCells) == False:
-            self.cells = newCells
+        newLines = [] # Il faut recréer les lignes supprimées
+        for i in range(removed):
+            line = []
+            for x in range(width):
+                line.append(0)
+            newLines.append(line)
+
+        # On redéfinit la grille de jeu avec les nouvelles lignes
+        self.board = newLines + keptLines
+
+        return removed # Servira pour les points gagnés
 
     def toDict(self):
         return {
