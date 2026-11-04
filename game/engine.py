@@ -98,6 +98,17 @@ class Tetris:
         else :
             return
 
+    def fall(self):
+        if self.gameOver:
+            return
+
+        newCells = []
+        for x, y in self.cells:
+            newCells.append((x, y + 1))
+
+        if self.collision(newCells) == False:
+            self.cells = newCells
+
     def clearLine(self):
         keptLines = []  # Définir les lignes à garder, celle qui ont un 0 car si une case est vide on garde la ligne
         for line in self.board :
