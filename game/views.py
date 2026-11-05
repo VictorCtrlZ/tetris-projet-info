@@ -28,6 +28,8 @@ def aboutus(request):
 def scoreboard(request):
     return render(request, "game/scoreboard.html")
 
+def erreur404(request):
+    return render(request, '404.html')
 
 def board(request):
     return JsonResponse(game.toDict())

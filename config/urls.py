@@ -19,8 +19,17 @@ from django.urls import include,path
 
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/accueil/', permanent=True)), #Permet la re-direction des requêtes à la racine vers le /accueil
     path('admin/', admin.site.urls),
-    path('', include('game.urls')),
     path('api/', include('game.urls')),
+    path('accueil/', views.accueil, name='accueil'),
+    path('menu/', views.menu, name='menu'),
+    path('scoreboard/', views.scoreboard, name='scoreboard'),
+    path('solo/', views.solo, name='modeSolo'),
+    path('duel/', views.duel, name='modeDuel'),
+    path('collaboratif/', views.collaboratif , name='modeCollaboratif'),
+    path('regles/', views.regles, name='regles'),
+    path('404/', views.erreur404, name='404'),
+    path('aboutus/', views.aboutus)
 ]
 
