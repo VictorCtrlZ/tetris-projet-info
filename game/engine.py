@@ -134,7 +134,7 @@ class Tetris:
     def lockPiece(self):
         for x, y in self.cells:
             if y >= 0 :
-                self.board[x][y] = self.currentFigure + 1 # 0 est une case vide, donc on prend +1
+                self.board[y][x] = self.currentFigure + 1 # 0 est une case vide, donc on prend +1
 
         removed = self.clearLine() # clearLine renvoie cb de cases ont été supprimées
 
