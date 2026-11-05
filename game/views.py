@@ -50,3 +50,7 @@ def rotate(request):
     return JsonResponse({
         "cells": game.cells
     })
+
+def update(request):
+    game.tick(50)
+    return JsonResponse(game.toDict())
