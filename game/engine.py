@@ -38,6 +38,8 @@ class Tetris:
         self.fallSpeed = FALL_SPEED
         self.time = 0
 
+        self.fastFall = False
+
         self.currentFigure = random.randint(0, 6)
         self.nextFigure = random.randint(0, 6)
         self.cells = self.createFigure(self.currentFigure)
@@ -98,7 +100,7 @@ class Tetris:
         else :
             return
 
-    def fall(self):
+    def down(self):
         if self.gameOver:
             return
 
@@ -151,6 +153,9 @@ class Tetris:
 
         if not self.gameOver :
             self.nextPiece()
+
+    def setFastFall(self, on) :
+        self.fastFall = on
 
     def toDict(self):
         return {
