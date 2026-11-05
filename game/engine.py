@@ -130,6 +130,28 @@ class Tetris:
 
         return removed # Servira pour les points gagnés
 
+    def nextPiece(self):
+        # On sauve la prochaine pièce dans current et définit directement la suivante
+        self.currentFigure = self.nextFigure
+        self.nextFigure = random.randint(0, 6)
+        self.cells = self.createFigure(self.currentFigure)
+
+        # Check si les coordonnées des nouvelles cellules sont directement en collision, si oui, game over.
+        if self.collision(self.cells) :
+            self.gameOver = True
+
+    def lockPiece(self):
+        for x, y in self.cells:
+            if y >= 0 :
+                self.board[x][y] = self.currentFigure + 1 # 0 est une case vide, donc on prend +1
+
+        removed = self.clearLine() # clearLine renvoie cb de cases ont été supprimées
+
+        self.score += points[removed]
+
+        if not self.gameOver :
+            self.nextPiece()
+
     def toDict(self):
         return {
             "width": width,
