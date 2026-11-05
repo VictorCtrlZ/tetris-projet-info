@@ -46,8 +46,8 @@ let figureColor = randomColor();
 
 
 
-
-fetch("/api/board/")
+function updateBoard(){
+    fetch("/api/board/")
     .then(response=> response.json())
     .then(data => {
 
@@ -57,7 +57,18 @@ fetch("/api/board/")
         drawBoard(data.width, data.height);
         drawCell(data.cells);
     });
+}
 
+function updateGame(){
+    fetch("/api/update/")
+        .then(response => response.json())
+        .then(data => {
+            drawBoard(data.width, data.height);
+            drawCell(data.cells);
+        });
+}
+updateBoard()
+setInterval(updateGame,50)
 
 function updateRotation() {
     fetch("/api/rotate")
