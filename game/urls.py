@@ -14,5 +14,6 @@ urlpatterns = [
     path('rotate/',views.rotate, name='rotate'),
     path('left/',views.left, name='left'),
     path('right/',views.right, name='right'),
-    path('update/',views.update, name='update')
+    path('update/',views.update, name='update'),
+    path('fastFall/',views.fastFall, name='fastFall')
 ]

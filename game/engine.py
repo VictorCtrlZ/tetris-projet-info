@@ -188,5 +188,7 @@ class Tetris:
             "time": self.time,
             "currentFigure": self.currentFigure,
             "nextFigure": self.nextFigure,
-            "cells": self.cells
+            "cells": self.cells,
+            "nextPiece": self.createFigure(self.nextFigure),
+            "fastFall": self.fastFall
         }

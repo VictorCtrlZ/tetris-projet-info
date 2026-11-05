@@ -18,11 +18,22 @@ function drawBoard(width, height){
     }
 }
 
-function drawCell(cells){
-    ctx.clearRect(0,0,canvas.width, canvas.height);
+function drawCell(cells, board){
     drawBoard(canvas.width,canvas.height)
-    ctx.fillStyle = ctx.strokeStyle = figureColor;
 
+    //Dessine les pièces déjà posées dans la grille
+    for(let y=0; y<board.length; y++){
+        for(let x=0; x<board[y].length; x++){
+            if(board[y][x] != 0){
+                ctx.beginPath();
+                ctx.rect(x*cellSize, y*cellSize, cellSize, cellSize);
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+    }
+    //Dessine la pièce actuelle
+    ctx.fillStyle = figureColor;
     for (let i =0; i<cells.length; i++) {
         let x = cells[i][0];
         let y = cells[i][1];
@@ -32,7 +43,6 @@ function drawCell(cells){
         ctx.fill();
         ctx.stroke();
     }
-
 
 }
 
@@ -55,7 +65,7 @@ function updateBoard(){
         canvas.height = data.height * cellSize;
 
         drawBoard(data.width, data.height);
-        drawCell(data.cells);
+        drawCell(data.cells, data.board);
     });
 }
 
@@ -64,7 +74,7 @@ function updateGame(){
         .then(response => response.json())
         .then(data => {
             drawBoard(data.width, data.height);
-            drawCell(data.cells);
+            drawCell(data.cells, data.board);
         });
 }
 updateBoard()
@@ -74,7 +84,7 @@ function updateRotation() {
     fetch("/api/rotate")
         .then(response => response.json())
         .then(data => {
-            drawCell(data.cells)
+            drawCell(data.cells, data.board)
         })
 }
 
@@ -82,7 +92,7 @@ function updateLeft() {
     fetch("/api/left")
         .then(response => response.json())
         .then(data => {
-            drawCell(data.cells)
+            drawCell(data.cells, data.board)
         })
 }
 
@@ -90,7 +100,7 @@ function updateRight() {
     fetch("/api/right")
         .then(response => response.json())
         .then(data => {
-            drawCell(data.cells)
+            drawCell(data.cells, data.board)
         })
 }
 
@@ -105,6 +115,17 @@ document.addEventListener("keydown", (event) => {
 
     if (event.key === "ArrowRight") {
         updateRight();
+    }
+
+    if(event.key === "ArrowDown"){
+        fetch("/api/fastFall/?on=true");
+    }
+
+});
+
+document.addEventListener("keyup", (event) => {
+    if(event.key === "ArrowDown"){
+        fetch("/api/fastFall/?on=false");
     }
 });
 

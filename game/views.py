@@ -34,23 +34,22 @@ def board(request):
 
 def left(request):
     game.left()
-    return JsonResponse({
-        "cells": game.cells
-    })
+    return JsonResponse(game.toDict())
+
 
 def right(request):
     game.right()
-    return JsonResponse({
-        "cells": game.cells
-    })
+    return JsonResponse(game.toDict())
 
 
 def rotate(request):
     game.rotation()
-    return JsonResponse({
-        "cells": game.cells
-    })
+    return JsonResponse(game.toDict())
 
 def update(request):
     game.tick(50)
+    return JsonResponse(game.toDict())
+
+def fastFall(request):
+    game.setFastFall(request.GET.get("on") == "true")
     return JsonResponse(game.toDict())
