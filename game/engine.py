@@ -100,7 +100,7 @@ class Tetris:
         else :
             return
 
-    def down(self):
+    def fall(self):
         if self.gameOver:
             return
 
@@ -156,6 +156,9 @@ class Tetris:
 
     def setFastFall(self, on) :
         self.fastFall = on
+
+    def tick(self):
+
 
     def toDict(self):
         return {
