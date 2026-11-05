@@ -17,7 +17,7 @@ points = {0 : 0, 1 : 100, 2 : 300, 3 : 700, 4 : 1500}
 
 # Vitesses en millisecondes du jeu
 FALL_SPEED = 1000
-FAST_FALL_SPEED = 50
+FAST_FALL_SPEED = 250
 
 #Jeu solo
 class Tetris:
@@ -143,11 +143,39 @@ class Tetris:
         if not self.gameOver :
             self.nextPiece()
 
+    def fall(self):
+        if self.gameOver:
+            return
+
+        newCells = []
+        for x, y in self.cells:
+            newCells.append((x, y + 1))
+
+        if self.collision(newCells) == False:
+            self.cells = newCells
+            return True #La pièce est descendue, pas de collision
+        return False # collision
+
     def setFastFall(self, on) :
         self.fastFall = on
 
-    def tick(self):
+    def tick(self, ms):
+        if self.gameOver :
+            return
 
+        if self.fastFall :
+            speed = FAST_FALL_SPEED
+        else :
+            speed = self.fallSpeed
+
+        self.time += ms
+
+        if self.time < speed :
+            return
+
+        self.time = 0
+        if not self.fall(): # Si il n'y a pas de collision, on
+            self.lockPiece() # On est en bas, on dessine la pièce
 
     def toDict(self):
         return {
