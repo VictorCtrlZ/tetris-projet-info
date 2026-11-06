@@ -49,15 +49,15 @@ class Tetris:
     def createFigure(self, figure):
         cells = []
         for x, y in figures[figure]:
-            cells.append((width // 2 + (x - 1), y + 1))
+            cells.append((width // 2 + (x - 1), y-2)) #pour le début au dessus de la grille et avoir l'effet d'entrée
         return cells
 
     # Collision, needed for the movements
     def collision(self, cells):
         for x, y in cells:
-            if x < 0 or x >= width or y < 0 or y >= height:
+            if x < 0 or x >= width or y >= height:
                 return True
-            if self.board[y][x] != 0:
+            if y>=0 and self.board[y][x] != 0:
                 return True
         return False
 
@@ -127,19 +127,22 @@ class Tetris:
         # On sauve la prochaine pièce dans current et définit directement la suivante
         self.currentFigure = self.nextFigure
         self.nextFigure = random.randint(0, 6)
-        self.cells = self.createFigure(self.currentFigure)
+        newCells = self.createFigure(self.currentFigure)
 
         # Check si les coordonnées des nouvelles cellules sont directement en collision, si oui, game over.
-        if self.collision(self.cells) :
+        if self.collision(newCells) :
             self.gameOver = True
+            self.cells = []
+        else:
+            self.cells = newCells
 
     def lockPiece(self):
         color = colors[self.currentFigure]
-        print("Pièce posée :", self.currentFigure, color)
-
         for x, y in self.cells:
-            if y >= 0 :
-                self.board[y][x] = color
+            if y < 0 :
+                self.gameOver = True
+                return
+            self.board[y][x] = color
 
         removed = self.clearLine() # clearLine renvoie cb de cases ont été supprimées
 
