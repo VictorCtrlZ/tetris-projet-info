@@ -33,8 +33,7 @@ function drawCell(cells, board, currentColor){
             }
         }
     }
-    //Dessine la pièce actuelle :Ne pas dessiner la pièce avant d'avoir checker les collisions sur la position de départ
-    //gérer les couleurs (différentes pour chaque pièce) -> côté back
+    //Dessine la pièce actuelle
     ctx.fillStyle = currentColor;
     for (let i =0; i<cells.length; i++) {
         let x = cells[i][0];
@@ -45,17 +44,13 @@ function drawCell(cells, board, currentColor){
         ctx.fill();
         ctx.stroke();
     }
-
-    console.log("Board :", board);
-    console.log("Current color :", currentColor);
-
 }
 
 
 
 
 function updateBoard(){
-    fetch("/api/board/")
+    fetch("/board/")
     .then(response=> response.json())
     .then(data => {
 
@@ -67,7 +62,7 @@ function updateBoard(){
 }
 
 function updateGame(){
-    fetch("/api/update/")
+    fetch("/update/")
         .then(response => response.json())
         .then(data => {
             drawCell(data.cells, data.board, data.currentColor);
@@ -77,7 +72,7 @@ updateBoard()
 setInterval(updateGame,50)
 
 function updateRotation() {
-    fetch("/api/rotate")
+    fetch("/rotate/")
         .then(response => response.json())
         .then(data => {
             drawCell(data.cells, data.board,data.currentColor)
@@ -85,7 +80,7 @@ function updateRotation() {
 }
 
 function updateLeft() {
-    fetch("/api/left")
+    fetch("/left/")
         .then(response => response.json())
         .then(data => {
             drawCell(data.cells, data.board,data.currentColor)
@@ -93,7 +88,7 @@ function updateLeft() {
 }
 
 function updateRight() {
-    fetch("/api/right")
+    fetch("/right/")
         .then(response => response.json())
         .then(data => {
             drawCell(data.cells, data.board, data.currentColor)
@@ -114,14 +109,14 @@ document.addEventListener("keydown", (event) => {
     }
 
     if(event.key === "ArrowDown"){
-        fetch("/api/fastFall/?on=true");
+        fetch("/fastFall/?on=true");
     }
 
 });
 
 document.addEventListener("keyup", (event) => {
     if(event.key === "ArrowDown"){
-        fetch("/api/fastFall/?on=false");
+        fetch("/fastFall/?on=false");
     }
 });
 

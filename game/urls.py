@@ -9,11 +9,5 @@ urlpatterns = [
     path('collaboratif/', views.modeCollaboratif, name='modeCollaboratif'),
     path('scoreboard/', views.scoreboard, name='scoreboard'),
     path('regles/', views.regles, name='regles'),
-    path('aboutus/', views.aboutus, name='aboutus'),
-    path('board/',views.board, name='board'),
-    path('rotate/',views.rotate, name='rotate'),
-    path('left/',views.left, name='left'),
-    path('right/',views.right, name='right'),
-    path('update/',views.update, name='update'),
-    path('fastFall/',views.fastFall, name='fastFall')
+    path('aboutus/', views.aboutus, name='aboutus')
 ]
