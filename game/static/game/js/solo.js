@@ -18,13 +18,14 @@ function drawBoard(width, height){
     }
 }
 
-function drawCell(cells, board){
-    drawBoard(canvas.width,canvas.height)
+function drawCell(cells, board, currentColor){
+    drawBoard(board[0].length,board.length)
 
     //Dessine les pièces déjà posées dans la grille
     for(let y=0; y<board.length; y++){
         for(let x=0; x<board[y].length; x++){
             if(board[y][x] != 0){
+                ctx.fillStyle = board[y][x];
                 ctx.beginPath();
                 ctx.rect(x*cellSize, y*cellSize, cellSize, cellSize);
                 ctx.fill();
@@ -32,8 +33,9 @@ function drawCell(cells, board){
             }
         }
     }
-    //Dessine la pièce actuelle
-    ctx.fillStyle = figureColor;
+    //Dessine la pièce actuelle :Ne pas dessiner la pièce avant d'avoir checker les collisions sur la position de départ
+    //gérer les couleurs (différentes pour chaque pièce) -> côté back
+    ctx.fillStyle = currentColor;
     for (let i =0; i<cells.length; i++) {
         let x = cells[i][0];
         let y = cells[i][1];
@@ -44,15 +46,11 @@ function drawCell(cells, board){
         ctx.stroke();
     }
 
+    console.log("Board :", board);
+    console.log("Current color :", currentColor);
+
 }
 
-
-function randomColor(){
-    let colorsList = ['#a2ffd8', '#8194f6', '#c6ffc3',
-            '#ffb180', '#ffe788', '#e8bcfb'];
-    return colorsList[Math.floor(Math.random() * colorsList.length)];
-}
-let figureColor = randomColor();
 
 
 
@@ -64,8 +62,7 @@ function updateBoard(){
         canvas.width = data.width * cellSize;
         canvas.height = data.height * cellSize;
 
-        drawBoard(data.width, data.height);
-        drawCell(data.cells, data.board);
+        drawCell(data.cells, data.board, data.currentColor);
     });
 }
 
@@ -73,8 +70,7 @@ function updateGame(){
     fetch("/api/update/")
         .then(response => response.json())
         .then(data => {
-            drawBoard(data.width, data.height);
-            drawCell(data.cells, data.board);
+            drawCell(data.cells, data.board, data.currentColor);
         });
 }
 updateBoard()
@@ -84,7 +80,7 @@ function updateRotation() {
     fetch("/api/rotate")
         .then(response => response.json())
         .then(data => {
-            drawCell(data.cells, data.board)
+            drawCell(data.cells, data.board,data.currentColor)
         })
 }
 
@@ -92,7 +88,7 @@ function updateLeft() {
     fetch("/api/left")
         .then(response => response.json())
         .then(data => {
-            drawCell(data.cells, data.board)
+            drawCell(data.cells, data.board,data.currentColor)
         })
 }
 
@@ -100,7 +96,7 @@ function updateRight() {
     fetch("/api/right")
         .then(response => response.json())
         .then(data => {
-            drawCell(data.cells, data.board)
+            drawCell(data.cells, data.board, data.currentColor)
         })
 }
 

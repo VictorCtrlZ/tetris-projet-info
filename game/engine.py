@@ -13,6 +13,8 @@ figures = [
     [(1, 0), (0, 0), (1, 1), (2, 0)],   # 6 : T, pivot (1, 0)
 ]
 
+colors = ['#a2ffd8', '#8194f6', '#c6ffc3','#ffb180', '#ffe788', '#e8bcfb', '#e6654c']
+
 points = {0 : 0, 1 : 100, 2 : 300, 3 : 700, 4 : 1500}
 
 # Vitesses en millisecondes du jeu
@@ -132,9 +134,12 @@ class Tetris:
             self.gameOver = True
 
     def lockPiece(self):
+        color = colors[self.currentFigure]
+        print("Pièce posée :", self.currentFigure, color)
+
         for x, y in self.cells:
             if y >= 0 :
-                self.board[y][x] = self.currentFigure + 1 # 0 est une case vide, donc on prend +1
+                self.board[y][x] = color
 
         removed = self.clearLine() # clearLine renvoie cb de cases ont été supprimées
 
@@ -186,8 +191,8 @@ class Tetris:
             "gameOver": self.gameOver,
             "fallSpeed": self.fallSpeed,
             "time": self.time,
-            "currentFigure": self.currentFigure,
-            "nextFigure": self.nextFigure,
+            "currentColor": colors[self.currentFigure],
+            "nextColor": colors[self.nextFigure],
             "cells": self.cells,
             "nextPiece": self.createFigure(self.nextFigure),
             "fastFall": self.fastFall
