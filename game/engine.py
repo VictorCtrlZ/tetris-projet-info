@@ -141,6 +141,7 @@ class Tetris:
         for x, y in self.cells:
             if y < 0 :
                 self.gameOver = True
+                self.cells = []
                 return
             self.board[y][x] = color
 

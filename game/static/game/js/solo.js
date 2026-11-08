@@ -8,6 +8,9 @@ canvas.height = 400;
 
 const cellSize = 25;
 
+let gameEnded = false;
+let gameInterval;
+
 function drawBoard(width, height){
     ctx.clearRect(0,0,canvas.width, canvas.height);
     ctx.strokeStyle = "black";
@@ -65,12 +68,21 @@ function updateGame(){
     fetch("/update/")
         .then(response => response.json())
         .then(data => {
-            drawCell(data.cells, data.board, data.currentColor);
+
             updateScore(data);
+
+            if(data.gameOver){
+                gameEnded = true;
+                document.getElementById("game-over").style.display = "flex";
+                clearInterval(gameInterval);
+                return;
+            }
+
+            drawCell(data.cells, data.board, data.currentColor);
         });
 }
 updateBoard()
-setInterval(updateGame,50)
+gameInterval=setInterval(updateGame,50)
 
 function updateRotation() {
     fetch("/rotate/")
@@ -128,4 +140,16 @@ document.addEventListener("keyup", (event) => {
     }
 });
 
+
+document.getElementById("restart").addEventListener("click",() => {
+    fetch("/restart/")
+        .then(response => response.json())
+        .then(data => {
+            gameEnded = false;
+            document.getElementById("game-over").style.display="none";
+            drawCell(data.cells, data.board, data.currentColor);
+            updateScore(data);
+            gameInterval=setInterval(updateGame,50)
+        })
+})
 

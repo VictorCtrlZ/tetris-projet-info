@@ -55,3 +55,10 @@ def update(request):
 def fastFall(request):
     game.setFastFall(request.GET.get("on") == "true")
     return JsonResponse(game.toDict())
+
+
+def restart(request):
+    global game
+    game = Tetris()
+    return JsonResponse(game.toDict())
+

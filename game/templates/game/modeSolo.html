@@ -18,6 +18,16 @@
 
     <canvas id="tetris"></canvas>
 
+    <div id="game-over" class="game-over">
+        <div class="popup">
+            <h2>Game over</h2>
+            <button id="restart">Recommencer</button>
+            <a href="{% url 'menu' %}">
+                <button>Retourner au menu</button>
+            </a>
+        </div>
+    </div>
+
     <script src="{% static 'game/js/solo.js' %}"></script>
 
 </body>
