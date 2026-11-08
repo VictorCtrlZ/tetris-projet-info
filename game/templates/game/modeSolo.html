@@ -10,8 +10,15 @@
 </head>
 <body>
     <h1>Mode solo</h1>
+
+    <div class="score-container">
+        <h2>SCORE</h2>
+        <p id="score">0</p>
+    </div>
+
     <canvas id="tetris"></canvas>
-    <script src="/static/game/js/solo.js"></script>
+
+    <script src="{% static 'game/js/solo.js' %}"></script>
 
 </body>
 </html>

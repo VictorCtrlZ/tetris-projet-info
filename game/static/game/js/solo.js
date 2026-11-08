@@ -66,6 +66,7 @@ function updateGame(){
         .then(response => response.json())
         .then(data => {
             drawCell(data.cells, data.board, data.currentColor);
+            updateScore(data);
         });
 }
 updateBoard()
@@ -94,6 +95,13 @@ function updateRight() {
             drawCell(data.cells, data.board, data.currentColor)
         })
 }
+
+
+function updateScore(data) {
+    document.getElementById("score").textContent=data.score;
+}
+
+
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowUp") {
