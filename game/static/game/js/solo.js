@@ -1,12 +1,15 @@
-
 const canvas=document.getElementById("tetris");
 const ctx = canvas.getContext("2d");
+
+const nexPieceCanvas=document.getElementById("next-piece");
+const nextPieceCtx=nexPieceCanvas.getContext("2d");
 
 canvas.width = 400;
 canvas.height = 400;
 
 
 const cellSize = 25;
+const nextPieceCellSize=20;
 
 let gameEnded = false;
 let gameInterval;
@@ -49,7 +52,38 @@ function drawCell(cells, board, currentColor){
     }
 }
 
+function drawNextPiece(nextPiece, nextColor){
+    nextPieceCtx.clearRect(0,0,nexPieceCanvas.width, nexPieceCanvas.height);
 
+    if(!nextPiece||nextPiece.length === 0){
+        return;
+    }
+
+    let minX=nextPiece[0][0];
+    let minY=nextPiece[0][1];
+
+    for(let i=0;i<nextPiece.length;i++){
+        if(nextPiece[i][0]<minX){
+            minX=nextPiece[i][0];
+        }
+        if(nextPiece[i][1]<minY){
+            minY=nextPiece[i][1];
+        }
+    }
+    nextPieceCtx.fillStyle=nextColor;
+    nextPieceCtx.strokeStyle="black";
+
+    for(let i=0;i<nextPiece.length;i++){
+        let x = nextPiece[i][0]-minX;
+        let y=nextPiece[i][1]-minY;
+
+        nextPieceCtx.beginPath();
+        nextPieceCtx.rect(x*nextPieceCellSize, y*nextPieceCellSize, nextPieceCellSize, nextPieceCellSize);
+        nextPieceCtx.fill();
+        nextPieceCtx.stroke();
+
+    }
+}
 
 
 function updateBoard(){
@@ -61,6 +95,7 @@ function updateBoard(){
         canvas.height = data.height * cellSize;
 
         drawCell(data.cells, data.board, data.currentColor);
+        drawNextPiece(data.nextPiece, data.nextColor);
     });
 }
 
@@ -79,6 +114,7 @@ function updateGame(){
             }
 
             drawCell(data.cells, data.board, data.currentColor);
+            drawNextPiece(data.nextPiece, data.nextColor);
         });
 }
 updateBoard()
@@ -148,6 +184,7 @@ document.getElementById("restart").addEventListener("click",() => {
             gameEnded = false;
             document.getElementById("game-over").style.display="none";
             drawCell(data.cells, data.board, data.currentColor);
+            drawNextPiece(data.nextPiece, data.nextColor);
             updateScore(data);
             gameInterval=setInterval(updateGame,50)
         })
