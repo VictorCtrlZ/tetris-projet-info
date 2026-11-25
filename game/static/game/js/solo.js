@@ -14,6 +14,11 @@ const nextPieceCellSize=20;
 let gameEnded = false;
 let gameInterval;
 
+let gamePaused=false;
+let timerIntervale;
+let elapsedTime=0;
+let timerStartTime=null;
+
 function drawBoard(width, height){
     ctx.clearRect(0,0,canvas.width, canvas.height);
     ctx.strokeStyle = "black";
@@ -108,8 +113,9 @@ function updateGame(){
 
             if(data.gameOver){
                 gameEnded = true;
-                document.getElementById("game-over").style.display = "flex";
                 clearInterval(gameInterval);
+                stopTimer();
+                document.getElementById("game-over").style.display = "flex";
                 return;
             }
 
@@ -119,6 +125,7 @@ function updateGame(){
 }
 updateBoard()
 gameInterval=setInterval(updateGame,50)
+startTimer();
 
 function updateRotation() {
     fetch("/rotate/")
@@ -150,8 +157,72 @@ function updateScore(data) {
 }
 
 
+function updateTimer(){
+    let currentTime=elapsedTime;
+    if(timerStartTime != null){
+        currentTime += Date.now() - timerStartTime;
+    }
+
+    let totalSeconds=Math.floor(currentTime/1000);
+    let minutes=Math.floor(totalSeconds/60);
+    let seconds=totalSeconds % 60;
+    document.getElementById("timer").textContent=String(minutes).padStart(2,"0")+":"+String(seconds).padStart(2,"0");
+}
+
+
+function startTimer(){
+    if(timerStartTime!=null){
+        return;
+    }
+    timerStartTime=Date.now();
+    updateTimer();
+    timerIntervale=setInterval(updateTimer, 250);
+}
+
+
+
+function stopTimer(){
+    if(timerStartTime!=null){
+        elapsedTime += Date.now()-timerStartTime;
+        timerStartTime=null;
+    }
+    clearInterval(timerIntervale);
+    updateTimer();
+}
+
+function resetTimer(){
+    stopTimer();
+    elapsedTime=0;
+    updateTimer();
+}
+
+
+
+function pauseGame(){
+    if(gameEnded||gamePaused){
+        return;
+    }
+    gamePaused=true;
+    clearInterval(gameInterval);
+    stopTimer();
+    document.getElementById("pause-menu").style.display="flex";
+}
+
+function resumeGame(){
+    if(gamePaused||gameEnded){
+        return;
+    }
+    gamePaused=false;
+    document.getElementById("pause-menu").style.display="none";
+    gameInterval=setInterval(updateGame,50);
+    startTimer();
+}
+
 
 document.addEventListener("keydown", (event) => {
+    if(gamePaused||gameEnded){
+        return;
+    }
     if (event.key === "ArrowUp") {
         updateRotation();
     }
@@ -171,6 +242,9 @@ document.addEventListener("keydown", (event) => {
 });
 
 document.addEventListener("keyup", (event) => {
+    if(gamePaused||gameEnded){
+        return;
+    }
     if(event.key === "ArrowDown"){
         fetch("/fastFall/?on=false");
     }
@@ -181,12 +255,23 @@ document.getElementById("restart").addEventListener("click",() => {
     fetch("/restart/")
         .then(response => response.json())
         .then(data => {
+            clearInterval(gameInterval);
+
             gameEnded = false;
+            gamePaused=false;
+
             document.getElementById("game-over").style.display="none";
+            document.getElementById("pause-menu").style.display="none";
+
             drawCell(data.cells, data.board, data.currentColor);
             drawNextPiece(data.nextPiece, data.nextColor);
             updateScore(data);
+            resetTimer();
+            startTimer();
             gameInterval=setInterval(updateGame,50)
         })
 })
+
+document.getElementById("pause").addEventListener("click",pauseGame);
+document.getElementById("resume").addEventListener("click",resumeGame);
 

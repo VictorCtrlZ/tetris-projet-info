@@ -13,6 +13,8 @@ figures = [
     [(1, 0), (0, 0), (1, 1), (2, 0)],   # 6 : T, pivot (1, 0)
 ]
 
+colors = ['#a2ffd8', '#8194f6', '#c6ffc3','#ffb180', '#ffe788', '#e8bcfb', '#e6654c']
+
 points = {0 : 0, 1 : 100, 2 : 300, 3 : 700, 4 : 1500}
 
 # Speed in ms
@@ -124,16 +126,23 @@ class Tetris:
         # We save the current figure and define the next one already
         self.currentFigure = self.nextFigure
         self.nextFigure = random.randint(0, 6)
-        self.cells = self.createFigure(self.currentFigure)
+        newCells = self.createFigure(self.currentFigure)
 
         # Check if there are collisions with the new coordinates, if yes, game over
         if self.collision(self.cells) :
             self.gameOver = True
+            self.cells = []
+        else:
+            self.cells = newCells
 
     def lockPiece(self):
+        color = colors[self.currentFigure]
         for x, y in self.cells:
-            if y >= 0 :
-                self.board[y][x] = self.currentFigure + 1 # 0 means empty, so we use +1
+            if y < 0 :
+                self.gameOver = True
+                self.cells = []
+                return
+            self.board[y][x] = color
 
         removed = self.clearLine() # clearLine returns how many lines have been removed
 
@@ -185,7 +194,9 @@ class Tetris:
             "gameOver": self.gameOver,
             "fallSpeed": self.fallSpeed,
             "time": self.time,
-            "currentFigure": self.currentFigure,
-            "nextFigure": self.nextFigure,
-            "cells": self.cells
+            "currentColor": colors[self.currentFigure],
+            "nextColor": colors[self.nextFigure],
+            "cells": self.cells,
+            "nextPiece": self.createFigure(self.nextFigure),
+            "fastFall": self.fastFall
         }
