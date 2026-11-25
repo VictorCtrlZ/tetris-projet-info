@@ -7,25 +7,21 @@ figures = [
     [(1, 0), (0, 0), (2, 0), (3, 0)],   # 0 : I, pivot (1, 0)
     [(0, 1), (0, 2), (1, 1), (1, 0)],   # 1 : S, pivot (0, 1)
     [(0, 1), (0, 0), (1, 1), (1, 2)],   # 2 : Z, pivot (0, 1)
-    [(0, 0), (0, 1), (1, 0), (1, 1)],   # 3 : le carré (O), ne tourne pas
+    [(0, 0), (0, 1), (1, 0), (1, 1)],   # 3 : square, does not rotate
     [(1, 0), (0, 1), (0, 0), (2, 0)],   # 4 : L, pivot (1, 0)
     [(1, 0), (0, 0), (2, 0), (2, 1)],   # 5 : J, pivot (1, 0)
     [(1, 0), (0, 0), (1, 1), (2, 0)],   # 6 : T, pivot (1, 0)
 ]
 
-colors = ['#a2ffd8', '#8194f6', '#c6ffc3','#ffb180', '#ffe788', '#e8bcfb', '#e6654c']
-
 points = {0 : 0, 1 : 100, 2 : 300, 3 : 700, 4 : 1500}
 
-# Vitesses en millisecondes du jeu
+# Speed in ms
 FALL_SPEED = 1000
 FAST_FALL_SPEED = 250
 
-#Jeu solo
+#Solo game
 class Tetris:
 
-    # Le __init__ est la première méthode éxécutée lors de la création d'une partie
-    # On y crée toutes les choses nécessaires pour la partie
     def __init__(self):
         self.board = []
         for y in range(height):
@@ -49,15 +45,15 @@ class Tetris:
     def createFigure(self, figure):
         cells = []
         for x, y in figures[figure]:
-            cells.append((width // 2 + (x - 1), y-2)) #pour le début au dessus de la grille et avoir l'effet d'entrée
+            cells.append((width // 2 + (x - 1), y + 1))
         return cells
 
     # Collision, needed for the movements
     def collision(self, cells):
         for x, y in cells:
-            if x < 0 or x >= width or y >= height:
+            if x < 0 or x >= width or y < 0 or y >= height:
                 return True
-            if y>=0 and self.board[y][x] != 0:
+            if self.board[y][x] != 0:
                 return True
         return False
 
@@ -82,16 +78,17 @@ class Tetris:
 
     def rotation(self):
 
-        if not self.gameOver and not self.currentFigure == 3: # 3 est le carré, pas besoin de rota
+        if not self.gameOver and not self.currentFigure == 3: # 3 is the square -> exception
 
             centerX, centerY = self.cells[0] # Pivot
             newCells = []
 
             for x, y in self.cells:
-                offsetX = x - centerX # Distances de chaque case au pivot
+                offsetX = x - centerX # The distance to the pivot for each part of the figure
                 offsetY = y - centerY
 
-                newX = centerX - offsetY # Nouvelle position
+                # New positions coordinates :
+                newX = centerX - offsetY
                 newY = centerY + offsetX
 
                 newCells.append((newX, newY))
@@ -103,49 +100,42 @@ class Tetris:
             return
 
     def clearLine(self):
-        keptLines = []  # Définir les lignes à garder, celle qui ont un 0 car si une case est vide on garde la ligne
+        keptLines = []  # Defining the lines to keep : if there's a 0, the case is empty, so we keep it
         for line in self.board :
             if 0 in line :
                 keptLines.append(line)
-            # Sinon la ligne est pleine, donc on enlève
+            # Or, the line is full, we remove it
 
         removed = height - len(keptLines)
 
-        newLines = [] # Il faut recréer les lignes supprimées
+        newLines = [] # Recreating the lines that have been removed
         for i in range(removed):
             line = []
             for x in range(width):
                 line.append(0)
             newLines.append(line)
 
-        # On redéfinit la grille de jeu avec les nouvelles lignes
+        # We recreate the board with the new lines
         self.board = newLines + keptLines
 
-        return removed # Servira pour les points gagnés
+        return removed # Will be useful for the score
 
     def nextPiece(self):
-        # On sauve la prochaine pièce dans current et définit directement la suivante
+        # We save the current figure and define the next one already
         self.currentFigure = self.nextFigure
         self.nextFigure = random.randint(0, 6)
-        newCells = self.createFigure(self.currentFigure)
+        self.cells = self.createFigure(self.currentFigure)
 
-        # Check si les coordonnées des nouvelles cellules sont directement en collision, si oui, game over.
-        if self.collision(newCells) :
+        # Check if there are collisions with the new coordinates, if yes, game over
+        if self.collision(self.cells) :
             self.gameOver = True
-            self.cells = []
-        else:
-            self.cells = newCells
 
     def lockPiece(self):
-        color = colors[self.currentFigure]
         for x, y in self.cells:
-            if y < 0 :
-                self.gameOver = True
-                self.cells = []
-                return
-            self.board[y][x] = color
+            if y >= 0 :
+                self.board[y][x] = self.currentFigure + 1 # 0 means empty, so we use +1
 
-        removed = self.clearLine() # clearLine renvoie cb de cases ont été supprimées
+        removed = self.clearLine() # clearLine returns how many lines have been removed
 
         self.score += points[removed]
 
@@ -162,7 +152,7 @@ class Tetris:
 
         if self.collision(newCells) == False:
             self.cells = newCells
-            return True #La pièce est descendue, pas de collision
+            return True # The figure fell, no collision
         return False # collision
 
     def setFastFall(self, on) :
@@ -183,8 +173,8 @@ class Tetris:
             return
 
         self.time = 0
-        if not self.fall(): # Si il n'y a pas de collision, on
-            self.lockPiece() # On est en bas, on dessine la pièce
+        if not self.fall(): # If no collision
+            self.lockPiece() # The bottom is reached, locking the piece
 
     def toDict(self):
         return {
@@ -195,9 +185,7 @@ class Tetris:
             "gameOver": self.gameOver,
             "fallSpeed": self.fallSpeed,
             "time": self.time,
-            "currentColor": colors[self.currentFigure],
-            "nextColor": colors[self.nextFigure],
-            "cells": self.cells,
-            "nextPiece": self.createFigure(self.nextFigure),
-            "fastFall": self.fastFall
+            "currentFigure": self.currentFigure,
+            "nextFigure": self.nextFigure,
+            "cells": self.cells
         }
