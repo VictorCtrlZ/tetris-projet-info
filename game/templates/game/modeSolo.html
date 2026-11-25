@@ -10,8 +10,30 @@
 </head>
 <body>
     <h1>Mode solo</h1>
+
+    <div class="next-piece-container">
+        <h2>PIECE SUIVANTE</h2>
+        <canvas id="next-piece" width="120" height="120"></canvas>
+    </div>
+
+    <div class="score-container">
+        <h2>SCORE</h2>
+        <p id="score">0</p>
+    </div>
+
     <canvas id="tetris"></canvas>
-    <script src="/static/game/js/solo.js"></script>
+
+    <div id="game-over" class="game-over">
+        <div class="popup">
+            <h2>Game over</h2>
+            <button id="restart">Recommencer</button>
+            <a href="{% url 'menu' %}">
+                <button>Retourner au menu</button>
+            </a>
+        </div>
+    </div>
+
+    <script src="{% static 'game/js/solo.js' %}"></script>
 
 </body>
 </html>

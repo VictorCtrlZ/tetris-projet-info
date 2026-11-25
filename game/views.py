@@ -28,29 +28,37 @@ def aboutus(request):
 def scoreboard(request):
     return render(request, "game/scoreboard.html")
 
+def erreur404(request):
+    return render(request, '404.html')
 
 def board(request):
     return JsonResponse(game.toDict())
 
 def left(request):
     game.left()
-    return JsonResponse({
-        "cells": game.cells
-    })
+    return JsonResponse(game.toDict())
+
 
 def right(request):
     game.right()
-    return JsonResponse({
-        "cells": game.cells
-    })
+    return JsonResponse(game.toDict())
 
 
 def rotate(request):
     game.rotation()
-    return JsonResponse({
-        "cells": game.cells
-    })
+    return JsonResponse(game.toDict())
 
 def update(request):
     game.tick(50)
     return JsonResponse(game.toDict())
+
+def fastFall(request):
+    game.setFastFall(request.GET.get("on") == "true")
+    return JsonResponse(game.toDict())
+
+
+def restart(request):
+    global game
+    game = Tetris()
+    return JsonResponse(game.toDict())
+
