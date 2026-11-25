@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription/connexion</title>
+    <link rel="stylesheet" href="{% static 'game/css/login.css' %}">
+    <link rel="icon" href="{% static 'game/images/logo.png' %}">
+</head>
+<body>
+    <div class="login-signin-container">
+        <div class="logo-section">
+            <img src="{% static 'game/images/logo.png' %}" class="logo">
+        </div>
+        <div class="button-section">
+            <a href="{% url 'inscription' %}" class="action-button">S'inscrire</a>
+            <a href="h{% url 'menu' %}" class="action-button">Se connecter</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -11,6 +11,13 @@
 <body>
     <h1>Mode solo</h1>
 
+    <div class="game-controls">
+        <button id="pause" class="game-button">Pause</button>
+        <a href="{% url 'menu' %}">
+            <button class="game-button">Retour au menu</button>
+        </a>
+    </div>
+
     <div class="next-piece-container">
         <h2>PIECE SUIVANTE</h2>
         <canvas id="next-piece" width="120" height="120"></canvas>
@@ -21,6 +28,11 @@
         <p id="score">0</p>
     </div>
 
+    <div class="timer-container">
+        <h2>TEMPS</h2>
+        <p id="timer">00:00</p>
+    </div>
+
     <canvas id="tetris"></canvas>
 
     <div id="game-over" class="game-over">
@@ -29,6 +41,16 @@
             <button id="restart">Recommencer</button>
             <a href="{% url 'menu' %}">
                 <button>Retourner au menu</button>
+            </a>
+        </div>
+    </div>
+
+    <div id="pause-menu" class="game-over">
+        <div class="popup">
+            <h2>Pause</h2>
+            <button id="resume">Reprendre</button>
+            <a href="{% url 'menu' %}">
+                <button>Retour au menu</button>
             </a>
         </div>
     </div>
