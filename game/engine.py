@@ -18,13 +18,14 @@ colors = ['#a2ffd8', '#8194f6', '#c6ffc3','#ffb180', '#ffe788', '#e8bcfb', '#e66
 points = {0 : 0, 1 : 100, 2 : 300, 3 : 700, 4 : 1500}
 
 # Speed in ms
-FALL_SPEED = 1000
-FAST_FALL_SPEED = 250
+FALL_SPEED = 500
+FAST_FALL_SPEED = 100
 
 #Solo game
 class Tetris:
 
-    def __init__(self):
+    def __init__(self, seed=None):
+        self.rng = random.Random(seed)
         self.board = []
         for y in range(height):
             line = []
@@ -40,8 +41,8 @@ class Tetris:
 
         self.fastFall = False
 
-        self.currentFigure = random.randint(0, 6)
-        self.nextFigure = random.randint(0, 6)
+        self.currentFigure = self.rng.randint(0, 6)
+        self.nextFigure = self.rng.randint(0, 6)
         self.cells = self.createFigure(self.currentFigure)
 
     def createFigure(self, figure):
@@ -125,11 +126,11 @@ class Tetris:
     def nextPiece(self):
         # We save the current figure and define the next one already
         self.currentFigure = self.nextFigure
-        self.nextFigure = random.randint(0, 6)
+        self.nextFigure = self.rng.randint(0, 6)
         newCells = self.createFigure(self.currentFigure)
 
         # Check if there are collisions with the new coordinates, if yes, game over
-        if self.collision(self.cells) :
+        if self.collision(newCells) :
             self.gameOver = True
             self.cells = []
         else:
