@@ -12,10 +12,13 @@
 
     </head>
     <body>
-        <div class="rules-button">
-            <a href="{% url 'regles' %}">
-                <img src="{% static 'game/images/rules.png' %}" alt="Rules">
-            </a>
+        <div class="logout-button">
+            <form method="post" action="{% url 'deconnexion' %}">
+                {% csrf_token %}
+                <button type="submit">
+                    <img src="{% static 'game/images/logout.png' %}" alt="Déconnexion">
+                </button>
+            </form>
         </div>
 
         <div class="dashboard-button">
@@ -35,11 +38,6 @@
             </a>
             <a href="{% url 'modeCollaboratif' %}">
                 <button class="menu-button">Collaboratif</button>
-            </a>
-        </div>
-        <div class="about-us-button">
-            <a href="{% url 'aboutus' %}">
-                <img src="{% static 'game/images/about-us.png' %}" alt="About us">
             </a>
         </div>
     </body>

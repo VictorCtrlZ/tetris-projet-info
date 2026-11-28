@@ -24,13 +24,21 @@ body {
         }
     }
 
-
-
-.rules-button {
+.logout-button {
     position: absolute;
     top: 3%;
     left: 3%;
+}
 
+.logout-button form {
+    margin: 0;
+}
+
+
+.logout-button button {
+    all: unset;
+    display: block;
+    cursor: pointer;
 }
 
 .dashboard-button {
@@ -39,19 +47,12 @@ body {
     right: 3%;
 }
 
-.about-us-button {
-    position: absolute;
-    bottom: 3%;
-    right: 3%;
-}
 
-.rules-button img,
-.dashboard-button img,
-.about-us-button img{
+.logout-button img,
+.dashboard-button img {
     width: 5.2vw;
     height: 5.2vw;
     object-fit: contain;
-    cursor: pointer;
 }
 
 

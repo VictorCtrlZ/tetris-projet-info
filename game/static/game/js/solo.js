@@ -209,7 +209,7 @@ function pauseGame(){
 }
 
 function resumeGame(){
-    if(gamePaused||gameEnded){
+    if(!gamePaused||gameEnded){
         return;
     }
     gamePaused=false;
